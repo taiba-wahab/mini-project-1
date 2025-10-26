@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shared Files - Cloud9</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Inter', sans-serif;
+    background:#f0f4f8;
+    padding:2rem;
+    min-height:100vh;
+}
+
+h1 { text-align:center; font-size:2rem; color:#2575fc; margin-bottom:2rem; }
+
+.shared-container {
+    max-width:800px;
+    margin:0 auto;
+}
+
+.shared-table {
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.shared-table th, .shared-table td {
+    padding:12px 15px;
+    text-align:left;
+    border-bottom:1px solid #eee;
+}
+
+.shared-table th {
+    background:#2575fc;
+    color:white;
+    font-weight:600;
+}
+
+.shared-table tr:hover { background:#e0f0ff; }
+
+button.download-btn {
+    padding:6px 12px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.download-btn:hover { background:#1e7e34; }
+
+button.remove-btn {
+    padding:6px 12px;
+    background:#dc3545;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.remove-btn:hover { background:#a71d2a; }
+
+@media(max-width:600px){
+    .shared-table th, .shared-table td{ padding:8px 10px; font-size:0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<h1>Shared Files</h1>
+
+<div class="shared-container">
+    <table class="shared-table">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Shared With</th>
+                <th>Date Shared</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="file-list">
+            <tr>
+                <td>Assignment1.pdf</td>
+                <td>teacher@example.com</td>
+                <td>2025-10-01</td>
+                <td>
+                    <button class="download-btn">Download</button>
+                    <button class="remove-btn">Remove</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Project.zip</td>
+                <td>friend@example.com</td>
+                <td>2025-10-05</td>
+                <td>
+                    <button class="download-btn">Download</button>
+                    <button class="remove-btn">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+const downloadBtns = document.querySelectorAll('.download-btn');
+const removeBtns = document.querySelectorAll('.remove-btn');
+
+downloadBtns.forEach(btn => {
+    btn.addEventListener('click', ()=>{ alert('Downloading file (Demo)'); });
+});
+
+removeBtns.forEach(btn => {
+    btn.addEventListener('click', ()=>{ 
+        if(confirm('Remove this shared file?')) btn.closest('tr').remove();
+    });
+});
+</script>
+
+</body>
+</html>

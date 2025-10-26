@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Dashboard - Cloud9</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Inter', sans-serif;
+    background:#f0f4f8;
+    padding:2rem;
+    min-height:100vh;
+}
+
+h1 { text-align:center; font-size:2rem; color:#2575fc; margin-bottom:2rem; }
+
+.dashboard-container {
+    max-width:900px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:2rem;
+}
+
+.card {
+    background:white;
+    padding:1.5rem;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.card h2 { margin-bottom:1rem; color:#333; }
+
+canvas { width:100% !important; height:300px !important; }
+
+@media(max-width:700px){
+    .dashboard-container { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<h1>Cloud9 Analytics</h1>
+
+<div class="dashboard-container">
+    <div class="card">
+        <h2>Storage Usage</h2>
+        <canvas id="storageChart"></canvas>
+    </div>
+    <div class="card">
+        <h2>Files Uploaded</h2>
+        <canvas id="filesChart"></canvas>
+    </div>
+    <div class="card">
+        <h2>Shared Files</h2>
+        <canvas id="sharedChart"></canvas>
+    </div>
+    <div class="card">
+        <h2>Activity</h2>
+        <canvas id="activityChart"></canvas>
+    </div>
+</div>
+
+<script>
+const storageChart = new Chart(document.getElementById('storageChart'), {
+    type:'doughnut',
+    data: {
+        labels:['Used','Free'],
+        datasets:[{data:[15,85], backgroundColor:['#2575fc','#e0f0ff']}]
+    },
+    options:{ responsive:true }
+});
+
+const filesChart = new Chart(document.getElementById('filesChart'), {
+    type:'bar',
+    data: {
+        labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets:[{label:'Files Uploaded', data:[5,7,3,8,6,4,2], backgroundColor:'#2575fc'}]
+    },
+    options:{ responsive:true, scales:{y:{beginAtZero:true}} }
+});
+
+const sharedChart = new Chart(document.getElementById('sharedChart'), {
+    type:'pie',
+    data: {
+        labels:['Academic','Personal'],
+        datasets:[{data:[12,8], backgroundColor:['#2575fc','#8e44ad'] }]
+    },
+    options:{ responsive:true }
+});
+
+const activityChart = new Chart(document.getElementById('activityChart'), {
+    type:'line',
+    data: {
+        labels:['Week1','Week2','Week3','Week4'],
+        datasets:[{
+            label:'Active Sessions',
+            data:[10,15,8,20],
+            borderColor:'#2575fc',
+            backgroundColor:'rgba(37,117,252,0.2)',
+            fill:true,
+            tension:0.4
+        }]
+    },
+    options:{ responsive:true, scales:{y:{beginAtZero:true}} }
+});
+</script>
+
+</body>
+</html>

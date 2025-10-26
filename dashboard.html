@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud9 Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Inter',sans-serif;
+    background: linear-gradient(135deg,#f0f4f8,#d9e2ec);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+header {
+    background:#2575fc;
+    color:white;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+header h1 { font-size:1.8rem; }
+nav a {
+    color:white;
+    margin-left:1rem;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+nav a:hover { text-decoration:underline; }
+
+.main-content {
+    display:flex;
+    flex:1;
+    padding:2rem;
+    gap:2rem;
+    flex-wrap:wrap;
+}
+
+.card {
+    background:white;
+    flex:1 1 300px;
+    padding:1.5rem;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    transition:transform 0.3s, box-shadow 0.3s;
+    cursor:pointer;
+}
+.card:hover { transform:translateY(-5px); box-shadow:0 8px 25px rgba(0,0,0,0.2); }
+.card h2 { margin-bottom:0.5rem; color:#2575fc; }
+.card p { color:#333; }
+
+footer {
+    background:#1c3aa9;
+    color:white;
+    text-align:center;
+    padding:1rem;
+}
+@media(max-width:768px){ .main-content{flex-direction:column; padding:1rem;} }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Cloud9 Dashboard</h1>
+    <nav>
+        <a href="files.html">My Files</a>
+        <a href="upload.html">Upload</a>
+        <a href="account.html">Account</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="settings.html">Settings</a>
+        <a href="help.html">Help</a>
+        <a href="login.html">Logout</a>
+    </nav>
+</header>
+
+<div class="main-content">
+    <div class="card">
+        <h2>Academic Mode</h2>
+        <p>Organize your assignments, projects, and notes by subject and semester.</p>
+    </div>
+    <div class="card">
+        <h2>Personal Mode</h2>
+        <p>Store personal files, photos, and media easily and securely.</p>
+    </div>
+    <div class="card">
+        <h2>Storage Usage</h2>
+        <p>You've used 15 GB of your 50 GB free storage.</p>
+    </div>
+    <div class="card">
+        <h2>Shared Files</h2>
+        <p>Access files shared with you and manage permissions.</p>
+    </div>
+</div>
+
+<footer>
+    &copy; 2025 MyCloudNine. All Rights Reserved.
+</footer>
+
+</body>
+</html>

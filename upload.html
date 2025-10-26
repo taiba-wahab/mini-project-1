@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Files - Cloud9</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Inter', sans-serif;
+    background: #f0f4f8;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:2rem;
+}
+
+h1 { font-size:2rem; margin-bottom:2rem; color:#2575fc; text-align:center; }
+
+.upload-form {
+    background:white;
+    padding:2rem;
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    width:100%;
+    max-width:500px;
+    text-align:center;
+}
+
+.upload-form input[type="file"] {
+    display:none;
+}
+.upload-form label {
+    display:inline-block;
+    padding:10px 20px;
+    background:#2575fc;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:1rem;
+}
+.upload-form label:hover { background:#1853c6; }
+
+.file-list {
+    margin-top:1rem;
+    text-align:left;
+}
+.file-item {
+    background:#e0f0ff;
+    padding:10px;
+    margin-bottom:5px;
+    border-radius:6px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.file-item span { font-weight:500; }
+.file-item button {
+    padding:4px 8px;
+    background:#ff4d4d;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    transition:0.3s;
+}
+.file-item button:hover { background:#cc0000; }
+
+button.upload-all {
+    margin-top:1rem;
+    padding:10px 20px;
+    background:#2575fc;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.upload-all:hover { background:#1853c6; }
+
+@media(max-width:500px){ .upload-form{ padding:1.5rem; } }
+</style>
+</head>
+<body>
+
+<h1>Upload Your Files</h1>
+
+<div class="upload-form">
+    <input type="file" id="file-input" multiple>
+    <label for="file-input">Select Files</label>
+
+    <div class="file-list" id="file-list"></div>
+
+    <button class="upload-all" id="upload-all-btn">Upload All</button>
+</div>
+
+<script>
+const fileInput = document.getElementById('file-input');
+const fileList = document.getElementById('file-list');
+const uploadAllBtn = document.getElementById('upload-all-btn');
+
+fileInput.addEventListener('change', () => {
+    fileList.innerHTML = '';
+    Array.from(fileInput.files).forEach((file, index) => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.innerHTML = `<span>${file.name}</span> <button data-index="${index}">Remove</button>`;
+        fileList.appendChild(div);
+    });
+});
+
+// Remove file from list
+fileList.addEventListener('click', e => {
+    if(e.target.tagName === 'BUTTON') {
+        const index = e.target.dataset.index;
+        const dt = new DataTransfer();
+        Array.from(fileInput.files).forEach((file, i) => {
+            if(i != index) dt.items.add(file);
+        });
+        fileInput.files = dt.files;
+        e.target.parentElement.remove();
+    }
+});
+
+uploadAllBtn.addEventListener('click', () => {
+    if(fileInput.files.length === 0){
+        alert('Please select files first');
+        return;
+    }
+    alert(`Uploading ${fileInput.files.length} file(s) (Demo)`);
+    fileInput.value = '';
+    fileList.innerHTML = '';
+});
+</script>
+
+</body>
+</html>

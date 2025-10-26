@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help & Support - Cloud9</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Inter', sans-serif;
+    background:#f0f4f8;
+    padding:2rem;
+    min-height:100vh;
+}
+
+h1 { text-align:center; font-size:2rem; color:#2575fc; margin-bottom:2rem; }
+
+.help-container {
+    max-width:800px;
+    margin:0 auto;
+    background:white;
+    padding:2rem;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.faq-item {
+    margin-bottom:1.5rem;
+    border-bottom:1px solid #ddd;
+    padding-bottom:1rem;
+}
+
+.faq-item h3 {
+    font-size:1.2rem;
+    cursor:pointer;
+    position:relative;
+    padding-right:25px;
+}
+
+.faq-item h3::after {
+    content:'+';
+    position:absolute;
+    right:0;
+    font-size:1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active h3::after {
+    content:'-';
+}
+
+.faq-item p {
+    margin-top:0.5rem;
+    display:none;
+    color:#333;
+}
+
+button.contact-btn {
+    display:block;
+    margin:2rem auto 0;
+    padding:10px 20px;
+    background:#2575fc;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button.contact-btn:hover { background:#1853c6; transform:translateY(-2px); }
+
+</style>
+</head>
+<body>
+
+<h1>Help & Support</h1>
+
+<div class="help-container">
+    <div class="faq-item">
+        <h3>How do I reset my password?</h3>
+        <p>Click on "Forgot Password" on the login page and follow the instructions to reset your password.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>How can I share files with others?</h3>
+        <p>Select the file in your dashboard and click "Share". You can generate a temporary link for sharing.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>What is the difference between Academic and Personal mode?</h3>
+        <p>Academic mode is structured for assignments and study materials. Personal mode is for general files like photos and documents.</p>
+    </div>
+
+    <div class="faq-item">
+        <h3>How much storage do I have?</h3>
+        <p>By default, every user gets 15 GB of free storage. Check your dashboard for usage details.</p>
+    </div>
+
+    <button class="contact-btn">Contact Support</button>
+</div>
+
+<script>
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+    item.querySelector('h3').addEventListener('click', ()=>{
+        item.classList.toggle('active');
+        const p = item.querySelector('p');
+        if(item.classList.contains('active')){
+            p.style.display='block';
+        } else {
+            p.style.display='none';
+        }
+    });
+});
+
+
+document.querySelector('.contact-btn').addEventListener('click', ()=>{
+    alert('Contact support at support@mycloudnine.com (Demo)');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Settings - Cloud9</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Inter', sans-serif;
+    background:#f0f4f8;
+    min-height:100vh;
+    padding:2rem;
+}
+
+h1 { text-align:center; font-size:2rem; color:#2575fc; margin-bottom:2rem; }
+
+.account-container {
+    max-width:600px;
+    margin:0 auto;
+    background:white;
+    padding:2rem;
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.account-container label {
+    display:block;
+    margin:10px 0 5px;
+    font-weight:600;
+    color:#333;
+}
+
+.account-container input {
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-bottom:15px;
+    transition:0.3s;
+}
+.account-container input:focus { border-color:#2575fc; box-shadow:0 0 8px rgba(37,117,252,0.2); outline:none; }
+
+button {
+    padding:12px 20px;
+    background:#2575fc;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+    margin-top:10px;
+}
+button:hover { background:#1853c6; }
+
+.section { margin-bottom:2rem; }
+.section h2 { margin-bottom:1rem; color:#333; border-bottom:1px solid #ddd; padding-bottom:5px; }
+</style>
+</head>
+<body>
+
+<h1>Account Settings</h1>
+
+<div class="account-container">
+    
+    <div class="section">
+        <h2>Profile Information</h2>
+        <label for="full-name">Full Name</label>
+        <input type="text" id="full-name" placeholder="John Doe">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="john@example.com">
+
+        <label for="contact">Contact Number</label>
+        <input type="text" id="contact" placeholder="+91 9876543210">
+    </div>
+
+    <div class="section">
+        <h2>Change Password</h2>
+        <label for="current-pass">Current Password</label>
+        <input type="password" id="current-pass" placeholder="••••••••">
+
+        <label for="new-pass">New Password</label>
+        <input type="password" id="new-pass" placeholder="••••••••">
+
+        <label for="confirm-pass">Confirm Password</label>
+        <input type="password" id="confirm-pass" placeholder="••••••••">
+    </div>
+
+    <button id="save-btn">Save Changes</button>
+</div>
+
+<script>
+document.getElementById('save-btn').addEventListener('click', ()=>{
+    const name = document.getElementById('full-name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if(name === '' || email === ''){
+        alert('Please fill out required fields.');
+        return;
+    }
+    alert('Account details saved successfully! (Demo)');
+});
+</script>
+
+</body>
+</html>
