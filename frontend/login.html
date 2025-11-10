@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyCloudNine Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    overflow: hidden;
+}
+body::before, body::after {
+    content:'';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+}
+body::before { width:500px; height:500px; top:-100px; left:-100px; animation: float 8s infinite alternate; }
+body::after { width:600px; height:600px; bottom:-150px; right:-150px; animation: float 12s infinite alternate-reverse; }
+@keyframes float { 0%{transform:translate(0,0);} 100%{transform:translate(20px,20px);} }
+
+#login-container {
+    position: relative;
+    z-index:1;
+    background:#fff;
+    border-radius:15px;
+    padding:3rem 2rem;
+    max-width:400px;
+    width:100%;
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+    text-align:center;
+    animation: fadeIn 1s ease;
+}
+@keyframes fadeIn { from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
+
+#login-container img { max-width:120px; margin-bottom:20px; animation: logoBounce 1s ease; }
+@keyframes logoBounce { 0%{transform:translateY(-20px);opacity:0;}50%{transform:translateY(5px);opacity:1;}100%{transform:translateY(0);} }
+
+h2 { margin-bottom:1.5rem; font-size:1.6rem; color:#333; font-weight:600; }
+input { width:100%; padding:12px 15px; margin:10px 0; border:1px solid #ddd; border-radius:8px; font-size:1rem; transition:0.3s all; }
+input:focus { border-color:#2575fc; box-shadow:0 0 8px rgba(37,117,252,0.3); outline:none; }
+
+button, a.button {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+    background:#2575fc;
+    color:white;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s all;
+    text-decoration:none;
+}
+button:hover, a.button:hover { background:#1853c6; transform:translateY(-2px); }
+
+.create-account-btn { background: #fff; color: #2575fc; border:2px solid #2575fc; font-weight:600; }
+.create-account-btn:hover { background:#e0f0ff; transform:translateY(-2px); }
+
+#password-section { display:none; margin-top:1rem; animation: fadeIn 0.5s ease forwards; }
+
+#remember-forgot { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:0.9rem; }
+#remember-forgot label { display:flex; align-items:center; cursor:pointer; }
+#remember-forgot input[type="checkbox"] { margin-right:5px; }
+
+#error-message { color:red; font-size:0.9rem; margin-top:10px; display:none; }
+
+a { color:#2575fc; text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+#forgot-modal {
+    display:none;
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,0.5);
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+}
+#forgot-modal .modal-content {
+    background:white;
+    padding:2rem;
+    border-radius:10px;
+    max-width:350px;
+    width:90%;
+    text-align:center;
+    animation: fadeIn 0.3s ease;
+}
+#forgot-modal input { margin-bottom:1rem; width:100%; padding:10px; border-radius:5px; border:1px solid #ddd; }
+#forgot-modal button { margin-top:0; width:100%; }
+
+@media (max-width:500px){ #login-container{padding:2rem 1.5rem;} }
+</style>
+</head>
+<body>
+
+<div id="login-container">
+    <img src="https://i.ibb.co/7bQQYkX/cloud9-logo.png" alt="Cloud9 Logo">
+    <h2>Login to Cloud9</h2>
+    <form id="login-form">
+        <input type="text" id="username" placeholder="Mobile Number or Email" required aria-label="Mobile Number or Email">
+        <button type="button" id="next-btn">Next</button>
+
+        <div id="password-section">
+            <input type="password" id="password" placeholder="Password" required aria-label="Password">
+            
+            <div id="remember-forgot">
+                <label><input type="checkbox" id="remember-me"> Remember Me</label>
+                <a href="#" id="forgot-btn">Forgot Password?</a>
+            </div>
+
+            <!-- ✅ Updated Sign In button -->
+            <button type="button" id="signin-btn" class="button">Sign In</button>
+            <a href="create-account.html" class="button create-account-btn">Create Account</a>
+        </div>
+
+        <div id="error-message"></div>
+    </form>
+</div>
+
+<div id="forgot-modal">
+    <div class="modal-content">
+        <h3>Forgot Password</h3>
+        <p>Enter your email to reset password:</p>
+        <input type="email" id="forgot-email" placeholder="Email" required>
+        <button id="reset-btn">Send Reset Link</button>
+        <p><a href="#" id="close-modal">Cancel</a></p>
+    </div>
+</div>
+
+<script>
+// --- EXISTING FRONTEND BEHAVIOUR ---
+const nextBtn = document.getElementById('next-btn');
+const usernameInput = document.getElementById('username');
+const passwordSection = document.getElementById('password-section');
+const errorMessage = document.getElementById('error-message');
+
+nextBtn.addEventListener('click', () => {
+    if(usernameInput.value.trim() === '') {
+        errorMessage.textContent = 'Please enter a mobile number or email.';
+        errorMessage.style.display = 'block';
+    } else {
+        errorMessage.style.display = 'none';
+        passwordSection.style.display = 'block';
+        passwordSection.scrollIntoView({behavior:'smooth'});
+        document.getElementById('password').focus();
+    }
+});
+
+const forgotBtn = document.getElementById('forgot-btn');
+const forgotModal = document.getElementById('forgot-modal');
+const closeModal = document.getElementById('close-modal');
+const resetBtn = document.getElementById('reset-btn');
+
+forgotBtn.addEventListener('click', (e)=>{ e.preventDefault(); forgotModal.style.display='flex'; });
+closeModal.addEventListener('click', (e)=>{ e.preventDefault(); forgotModal.style.display='none'; });
+resetBtn.addEventListener('click', ()=>{
+    const email = document.getElementById('forgot-email').value.trim();
+    if(email==='') { alert('Enter your email'); return; }
+    alert(`Reset link sent to ${email} (Demo)`);
+    forgotModal.style.display='none';
+});
+
+usernameInput.addEventListener('keypress', (e)=>{
+    if(e.key==='Enter') nextBtn.click();
+});
+
+// --- ✅ BACKEND CONNECTION FOR LOGIN ---
+const signinBtn = document.getElementById('signin-btn');
+
+signinBtn.addEventListener('click', async () => {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const error = document.getElementById('error-message');
+
+    if (!username || !password) {
+        error.textContent = 'Please fill all fields.';
+        error.style.display = 'block';
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: username, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert(data.message);
+            window.location.href = 'dashboard.html';
+        } else {
+            error.textContent = data.message || 'Invalid credentials';
+            error.style.display = 'block';
+        }
+    } catch (err) {
+        error.textContent = 'Server error. Please try again later.';
+        error.style.display = 'block';
+    }
+});
+</script>
+
+</body>
+</html>
